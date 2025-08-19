@@ -1,8 +1,7 @@
-﻿namespace ProvaPub.Models
+﻿namespace ProvaPub.Models;
+
+public class RandomNumber
 {
-    public class RandomNumber
-    {
-        public int Id { get; set; }
-        public int Number { get; set; }
-    }
+    public int Id { get; set; }
+    public int Number { get; set; }
 }
