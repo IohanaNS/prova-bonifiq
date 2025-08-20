@@ -5,18 +5,16 @@ namespace ProvaPub.Services.Payments;
 
 public class PaymentStrategyFactory
 {
-    private readonly Dictionary<PaymentType, IPaymentStrategy> _strategies;
+    private readonly IEnumerable<IPaymentStrategy> _strategies;
 
     public PaymentStrategyFactory(IEnumerable<IPaymentStrategy> strategies)
     {
-        _strategies = strategies.ToDictionary(m => m.Type);
+        _strategies = strategies;
     }
 
     public IPaymentStrategy GetStrategy(PaymentType method)
     {
-        if (!_strategies.TryGetValue(method, out var strategy))
-            throw new InvalidOperationException($"Método de pagamento {method} não suportado");
-
-        return strategy;
+        var strategy = _strategies.FirstOrDefault(x => x.Type == method);
+        return strategy ?? throw new InvalidOperationException($"Método de pagamento {method} não suportado");
     }
 }
